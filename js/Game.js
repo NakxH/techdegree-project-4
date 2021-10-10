@@ -37,19 +37,38 @@ class Game {
       const chosenLetter = e.target.textContent;
       if (this.activePhrase.checkLetter(chosenLetter)){
         this.activePhrase.showMatchedLetter(chosenLetter);
-      }
-
-      if (!this.checkForWin()){
+        if(this.checkForWin()){
+          this.gameOver();
+        }
+      } else {
         this.removeLife()
       }
     })
   }
 
   checkForWin(){
-    return document.querySelectorAll('.hide').length === 0
+    return document.querySelectorAll('.hide').length === 0;
   }
 
   removeLife(){
-    
+    this.missed++;
+    const heartImg = document.querySelector('.tries img[src*="images/liveHeart.png"]');
+    heartImg.src = 'images/lostHeart.png';
+    if(this.missed === 5){
+      this.gameOver();
+    }
+  }
+
+  gameOver(){
+    const overlay = document.querySelector('#overlay');
+    const overlayTitle = document.querySelector('#game-over-message')
+    overlay.style.display = 'block';
+    if (this.missed === 5){
+      overlayTitle.innerHTML = 'You Lost!'
+      overlay.classList = 'lose'
+    } else {
+      overlayTitle.innerHTML = 'You Won!'
+      overlay.classList = 'win'
+    }
   }
 }

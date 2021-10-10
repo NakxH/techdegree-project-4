@@ -12,7 +12,7 @@ class Phrase {
     let letter = this.phrase
       .split('')
       .reduce(
-        (acc, letter) => acc += `<li class="hide ${letter === ' ' ? 'space' : `letter ${letter}`}">${letter}</li>`,
+        (acc, letter) => acc += `<li class="${letter === ' ' ? 'space' : `letter hide ${letter}`}">${letter}</li>`,
         ''
       );
     phraseSection.innerHTML = letter;
