@@ -25,25 +25,41 @@ class Game {
   }
 
   startGame(){
+    this.resetGame();
     const overlay = document.querySelector('#overlay');
     overlay.style.display = 'none';
     this.activePhrase = this.getRandomPhrase();
     this.activePhrase.addPhraseToDisplay();
   }
 
-  handleInteraction(){
-    const keyboard = document.querySelector('#qwerty');
-    keyboard.addEventListener('click', e => {
-      const chosenLetter = e.target.textContent;
-      if (this.activePhrase.checkLetter(chosenLetter)){
-        this.activePhrase.showMatchedLetter(chosenLetter);
-        if(this.checkForWin()){
-          this.gameOver();
-        }
-      } else {
-        this.removeLife()
+  resetGame(){
+    this.missed = 0;
+    const phraseSection = document.querySelector('#phrase ul');
+    phraseSection.innerHTML = '';
+    const keys = document.querySelectorAll('.key');
+    for(let i = 0; i < keys.length; i++){
+      keys[i].classList.remove('chosen', 'wrong');
+      keys[i].disabled = false;
+    }
+    const lostImgs = document.querySelectorAll('.tries img[src*="images/lostHeart.png"]');
+    for(let i = 0; i < lostImgs.length; i++){
+      lostImgs[i].src = 'images/liveHeart.png';
+    }
+  }
+
+  handleInteraction(element){
+    const chosenLetter = element.textContent;
+    if (this.activePhrase.checkLetter(chosenLetter)){
+      this.activePhrase.showMatchedLetter(chosenLetter);
+      element.classList.add('chosen');
+      if(this.checkForWin()){
+        this.gameOver();
       }
-    })
+    } else {
+      element.classList.add('wrong');
+      this.removeLife();
+    }
+    element.disabled = true;
   }
 
   checkForWin(){
