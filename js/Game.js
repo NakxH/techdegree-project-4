@@ -48,6 +48,10 @@ class Game {
   }
 
   handleInteraction(element){
+    const overlay = document.querySelector('#overlay')
+    if(overlay.style.display === 'block'){
+      return
+    }
     const chosenLetter = element.textContent;
     if (this.activePhrase.checkLetter(chosenLetter)){
       this.activePhrase.showMatchedLetter(chosenLetter);
