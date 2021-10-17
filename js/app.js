@@ -17,3 +17,10 @@ keyboard.addEventListener('click', (e) => {
     game.handleInteraction(e.target);
   }
 })
+
+document.addEventListener('keyup', (e) => {
+  const keys = Array.from(document.querySelectorAll('.key')).filter(key => key.textContent.toLowerCase() === e.key.toLowerCase());
+  if(keys.length > 0 && keys[0].disabled === false){
+    game.handleInteraction(keys[0]);
+  }
+})
