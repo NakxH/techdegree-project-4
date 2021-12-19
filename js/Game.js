@@ -11,6 +11,7 @@ class Game {
 
   createPhrases(){
     let phrases = [
+      new Phrase('james bond'),
       new Phrase('starwars'),
       new Phrase('forest gump'),
       new Phrase('titanic'),
